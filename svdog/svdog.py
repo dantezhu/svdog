@@ -8,11 +8,11 @@ from supervisor import childutils
 
 
 class SVDog(object):
-    def __init__(self, log_name=None, processes=None):
+    def __init__(self, logger_name=None, processes=None):
         self.processes = processes
         self.stdin = sys.stdin
         self.stdout = sys.stdout
-        self.logger = logging.getLogger(log_name or __name__)
+        self.logger = logging.getLogger(logger_name or __name__)
  
     def run(self):
         while True:
