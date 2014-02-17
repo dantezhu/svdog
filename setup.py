@@ -7,7 +7,7 @@ setup(
     zip_safe=False,
     platforms='any',
     packages=['svdog'],
-    install_requires=['flylog'],
+    install_requires=['supervisor', 'flylog'],
     scripts=['svdog/bin/run_svdog.py'],
     url="https://github.com/dantezhu/svdog",
     license="BSD",
