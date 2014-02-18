@@ -1,9 +1,8 @@
 from setuptools import setup
-import svdog
 
 setup(
     name="svdog",
-    version=svdog.__version__,
+    version='0.1.10',
     zip_safe=False,
     platforms='any',
     packages=['svdog'],
