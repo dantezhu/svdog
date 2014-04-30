@@ -1,10 +1,20 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import re
 import sys
 import logging
 
 from supervisor import childutils
+
+
+def re_equal(pattern, string):
+    """
+    判断表达式与string是否能完全匹配
+    """
+    result = re.match(pattern, string)
+
+    return result and result.group() == string
 
 
 class SVDog(object):
@@ -24,11 +34,13 @@ class SVDog(object):
 
             pheaders, pdata = childutils.eventdata(payload)
 
-            if self.excludes and pheaders.get('pheaders') in self.excludes:
+            process_name = pheaders.get('pheaders')
+
+            if self.excludes and filter(lambda x: re_equal(x, process_name), self.excludes):
                 childutils.listener.ok(self.stdout)
                 continue
 
-            if self.processes and pheaders.get('pheaders') not in self.processes:
+            if self.processes and not filter(lambda x: re_equal(x, process_name), self.processes):
                 childutils.listener.ok(self.stdout)
                 continue
  
