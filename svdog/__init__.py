@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-__version__ = '0.1.16'
+__version__ = '0.1.17'
 
 import re
 import sys
@@ -35,7 +35,7 @@ class SVDog(object):
 
             pheaders, pdata = childutils.eventdata(payload)
 
-            process_name = pheaders.get('pheaders')
+            process_name = pheaders.get('processname')
 
             if process_name and self.excludes and filter(lambda x: re_equal(x, process_name), self.excludes):
                 childutils.listener.ok(self.stdout)
