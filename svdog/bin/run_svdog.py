@@ -1,30 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-"""
-#=============================================================================
-#
-#     FileName: run_svdog.py
-#         Desc: 当supervisor发现某些进程有问题的时候，要记录下来或者发送邮件
-#
-#       Author: dantezhu
-#        Email: dantezhu@qq.com
-#     HomePage: http://www.vimer.cn
-#
-#      Created: 2013-07-29 16:37:24
-#      History:
-#               0.0.1 | dantezhu | 2013-07-29 16:37:24 | init
-#               0.0.2 | dantezhu | 2013-12-13 10:00:07 | use -d
-#               0.0.3 | dantezhu | 2013-12-13 10:00:07 | 升级到argparse
-#               0.0.4 | dantezhu | 2013-12-13 10:00:07 | 捕获KeyboardInterrupt
-#               0.1.4 | dantezhu | 2013-12-23 15:08:07 | 开源
-#
-#=============================================================================
-"""
-
 import sys
-sys.path.insert(0, '../../')
-
 import argparse
 import os.path as op
 import logging
@@ -123,6 +100,7 @@ logger = logging.getLogger('default')
 def build_parser():
     parser = argparse.ArgumentParser()
     parser.add_argument('-p', '--process', help='process name', action='append')
+    parser.add_argument('-e', '--exclude', help='exclude process name', action='append')
     parser.add_argument('-d', '--debug', default=False, help='debug mode', action='store_true')
     parser.add_argument('-v', '--version', action='version', version='%s' % svdog.__version__)
     return parser
@@ -141,9 +119,9 @@ def main():
 
     debug = args.debug
  
-    logger.info('debug: %s, processes: %s', debug, args.process)
+    logger.info('debug: %s, processes: %s, exclude: %s', debug, args.process, args.exclude)
 
-    prog = SVDog(processes=args.process)
+    prog = SVDog(processes=args.process, excludes=args.exclude)
     try:
         prog.run()
     except KeyboardInterrupt:
