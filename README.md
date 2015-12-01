@@ -11,3 +11,8 @@ example:
     user=user_00
     events=PROCESS_STATE_EXITED,PROCESS_STATE_FATAL
     autorestart=true
+    redirect_stderr=true
+
+注意: 
+
+    supervisor 3.2.0 及之后的版本，开始不允许 eventlistener 类型使用 redirect_stderr=true
