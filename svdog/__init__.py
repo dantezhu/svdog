@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-__version__ = '0.1.18'
+__version__ = '0.1.19'
 
 import re
 import sys
@@ -10,7 +10,7 @@ from supervisor import childutils
 
 
 class SVDog(object):
-    def __init__(self, logger_name=None, processes=None, excludes=None):
+    def __init__(self, logger_name, processes=None, excludes=None):
         self.processes = processes
         self.excludes = excludes
         self.stdin = sys.stdin
