@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import copy
 import sys
 import argparse
 import os.path as op
@@ -84,11 +85,6 @@ LOGGING = {
             'level': 'DEBUG',
             'propagate': False
         },
-        'svdog': {
-            'handlers': ['console', 'rotating_file', 'flylog'],
-            'level': 'DEBUG',
-            'propagate': False
-        },
     }
 }
 
@@ -101,29 +97,35 @@ def build_parser():
     parser = argparse.ArgumentParser()
     parser.add_argument('-p', '--process', help='process name', action='append')
     parser.add_argument('-e', '--exclude', help='exclude process name', action='append')
+    parser.add_argument('-r', '--role', help='flylog role', action='append')
     parser.add_argument('-d', '--debug', default=False, help='debug mode', action='store_true')
     parser.add_argument('-v', '--version', action='version', version='%s' % svdog.__version__)
     return parser
 
 
-def configure_logging():
-    logging.config.dictConfig(LOGGING)
+def configure_logging(role_list):
+
+    log_config = copy.deepcopy(LOGGING)
+    # None 将会取 flylog 中的default配置
+    log_config['handlers']['flylog']['role_list'] = role_list
+
+    logging.config.dictConfig(log_config)
 
  
 def main():
     global debug
 
-    configure_logging()
-
     args = build_parser().parse_args()
 
     debug = args.debug
- 
-    logger.info('debug: %s, processes: %s, exclude: %s', debug, args.process, args.exclude)
+    logger.info('debug: %s, processes: %s, exclude: %s, roles: %s',
+                debug, args.process, args.exclude, args.role)
 
-    prog = SVDog(processes=args.process, excludes=args.exclude)
+    configure_logging(args.role)
+
+    app = SVDog('default', processes=args.process, excludes=args.exclude)
     try:
-        prog.run()
+        app.run()
     except KeyboardInterrupt:
         sys.exit(0)
  
