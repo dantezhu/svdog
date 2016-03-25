@@ -11,7 +11,7 @@ example:
     user=user_00
     events=PROCESS_STATE_EXITED,PROCESS_STATE_FATAL
     autorestart=true
-    redirect_stderr=true
+    redirect_stderr=false
 
 注意: 
 
