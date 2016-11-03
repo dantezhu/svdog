@@ -8,7 +8,7 @@ LOG_FORMAT = '\n'.join((
     '-' * 80 + '/',
 ))
 
-# 不能有中断打印
+# 不能有终端打印
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': True,
