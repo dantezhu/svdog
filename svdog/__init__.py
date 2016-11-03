@@ -5,19 +5,31 @@ __version__ = '0.1.19'
 import re
 import sys
 import logging
+import logging.config
 
 from supervisor import childutils
 
 
+logger = logging.getLogger('svdog')
+
+
 class SVDog(object):
-    def __init__(self, logger_name, processes=None, excludes=None):
-        self.processes = processes
-        self.excludes = excludes
+    excludes = None
+
+    def __init__(self, config=None):
+        config = config or dict()
+
+        if hasattr(config, 'LOGGING'):
+            logging.config.dictConfig(config.LOGGING)
+
+        self.excludes = getattr(config, 'EXCLUDES', None)
+
         self.stdin = sys.stdin
         self.stdout = sys.stdout
-        self.logger = logging.getLogger(logger_name or __name__)
 
     def run(self):
+        logger.info('running')
+
         while True:
             headers, payload = childutils.listener.wait(self.stdin, self.stdout)
 
@@ -32,9 +44,5 @@ class SVDog(object):
                 childutils.listener.ok(self.stdout)
                 continue
 
-            if process_name and self.processes and not filter(lambda x: re.match(x, process_name), self.processes):
-                childutils.listener.ok(self.stdout)
-                continue
-
-            self.logger.fatal('%s\n%s', headers, payload)
+            logger.error('%s\n%s', headers, payload)
             childutils.listener.ok(self.stdout)
