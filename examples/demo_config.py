@@ -8,6 +8,7 @@ LOG_FORMAT = '\n'.join((
     '-' * 80 + '/',
 ))
 
+# 不能有中断打印
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': True,
@@ -19,22 +20,26 @@ LOGGING = {
     },
 
     'handlers': {
+        'file': {
+            'level': 'INFO',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': '/tmp/svdog.log',
+            'maxBytes': 1024*1024*500,
+            'backupCount': 5,
+            'formatter': 'standard',
+        },
         'flylog': {
             'level': 'ERROR',
             'class': 'flylog.LogHandler',
             'formatter': 'standard',
             'source': 'svdog',
         },
-        'console': {
-            'level': 'DEBUG',
-            'class': 'logging.StreamHandler',
-            'formatter': 'standard',
-        },
+
     },
 
     'loggers': {
         'svdog': {
-            'handlers': ['console', 'flylog'],
+            'handlers': ['file', 'flylog'],
             'level': 'ERROR',
             'propagate': False
         },

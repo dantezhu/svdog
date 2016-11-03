@@ -3,15 +3,11 @@
 
 import sys
 import argparse
-import logging
-import logging.config
 import imp
 
 import svdog
 
-logger = logging.getLogger('default')
 
- 
 def build_parser():
     parser = argparse.ArgumentParser()
     parser.add_argument('-c', '--config', help='config file', action='store', required=False)
