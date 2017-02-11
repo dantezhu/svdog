@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-__version__ = '0.1.21'
+__version__ = '0.1.23'
 
 import re
 import sys
