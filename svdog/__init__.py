@@ -17,8 +17,6 @@ class SVDog(object):
     excludes = None
 
     def __init__(self, config=None):
-        config = config or dict()
-
         if hasattr(config, 'LOGGING'):
             logging.config.dictConfig(config.LOGGING)
 
