@@ -3,6 +3,8 @@ svdog
 
 supervisor's dog, should deploy with flylog
 
+python2, python3 supported
+
 example:
 
     [eventlistener:svdog]
