@@ -38,7 +38,7 @@ class SVDog(object):
 
             process_name = pheaders.get('processname')
 
-            if process_name and self.excludes and filter(lambda x: re.match(x, process_name), self.excludes):
+            if process_name and self.excludes and list(filter(lambda x: re.match(x, process_name), self.excludes)):
                 childutils.listener.ok(self.stdout)
                 continue
 
