@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name="svdog",
-    version='0.2.1',
+    version='0.2.3',
     zip_safe=False,
     platforms='any',
     packages=['svdog'],
