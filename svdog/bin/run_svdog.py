@@ -3,7 +3,7 @@
 
 import sys
 import argparse
-import imp
+import types
 
 import svdog
 
@@ -16,7 +16,7 @@ def build_parser():
 
 
 def load_config(filename):
-    d = imp.new_module('config')
+    d = types.ModuleType('config')
     d.__file__ = filename
     try:
         with open(filename) as config_file:
